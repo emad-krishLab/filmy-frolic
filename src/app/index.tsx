@@ -1,10 +1,6 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Redirect } from "expo-router";
 
 export default function Index() {
-  return (
-    <View className="bg-red-500 flex-1 items-center justify-center" >
-      <Text>This is Home Screen</Text>
-    </View>
-  );
+  // Root entry point — redirect to auth login screen
+  return <Redirect href="/(auth)/login" />;
 }
-
