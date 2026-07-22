@@ -10,7 +10,6 @@ import { Tabs } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-// ─── Tab config ──────────────────────────────────────────────────────────────
 const TABS = [
   { name: "home", label: "Home", icon: Home01Icon },
   { name: "communities", label: "Communities", icon: UserGroup02Icon },
@@ -19,7 +18,6 @@ const TABS = [
   { name: "profile", label: "Profile", icon: User02Icon },
 ] as const;
 
-// ─── Custom Tab Bar ───────────────────────────────────────────────────────────
 function CustomTabBar({ state, descriptors, navigation }: any) {
   const insets = useSafeAreaInsets();
 
@@ -59,7 +57,7 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
               accessibilityRole="tab"
               accessibilityState={{ selected: isFocused }}
             >
-              {/* Active indicator pill */}
+              {/* Active indicator pill
               {isFocused && (
                 <View
                   style={{
@@ -71,12 +69,12 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
                     backgroundColor: "#F5C518",
                   }}
                 />
-              )}
+              )} */}
               <View
                 style={{
                   width: 44,
                   height: 44,
-                  borderRadius: 14,
+                  borderRadius: 18,
                   alignItems: "center",
                   justifyContent: "center",
                   backgroundColor: isFocused

@@ -1,8 +1,8 @@
 import "@/global.css";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   return (
@@ -12,6 +12,10 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="auth" />
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="create-community"
+            options={{ presentation: "modal", headerShown: false }}
+          />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>
