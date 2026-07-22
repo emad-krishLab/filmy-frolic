@@ -1,51 +1,132 @@
-import React, { useState } from "react";
+import { CircleCheckBigIcon, CircleXIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Image,
   Dimensions,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
-import Feather from "@react-native-vector-icons/feather";
 
 const { width: W } = Dimensions.get("window");
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 const DAILY_CHALLENGE = {
-  question: "Which director made 'Inception', 'Interstellar', and 'Oppenheimer'?",
-  options: ["Steven Spielberg", "Christopher Nolan", "Denis Villeneuve", "Ridley Scott"],
+  question:
+    "Which director made 'Inception', 'Interstellar', and 'Oppenheimer'?",
+  options: [
+    "Steven Spielberg",
+    "Christopher Nolan",
+    "Denis Villeneuve",
+    "Ridley Scott",
+  ],
   correct: 1,
   xpReward: 150,
   streak: 7,
 };
 
 const QUIZ_CATEGORIES = [
-  { id: "q1", title: "Box Office Trivia", icon: "dollar-sign", color: "#F5C518", questions: 15, difficulty: "Medium" },
-  { id: "q2", title: "Directors' Cut", icon: "video", color: "#7C5CFC", questions: 20, difficulty: "Hard" },
-  { id: "q3", title: "Classic Cinema", icon: "film", color: "#3B82F6", questions: 12, difficulty: "Easy" },
-  { id: "q4", title: "Plot Twists", icon: "alert-triangle", color: "#E91E8C", questions: 10, difficulty: "Hard" },
-  { id: "q5", title: "Soundtrack IQ", icon: "music", color: "#1FD1A8", questions: 8, difficulty: "Easy" },
-  { id: "q6", title: "Actor Spotlight", icon: "user", color: "#F97316", questions: 18, difficulty: "Medium" },
+  {
+    id: "q1",
+    title: "Box Office Trivia",
+    icon: "dollar-sign",
+    color: "#F5C518",
+    questions: 15,
+    difficulty: "Medium",
+  },
+  {
+    id: "q2",
+    title: "Directors' Cut",
+    icon: "video",
+    color: "#7C5CFC",
+    questions: 20,
+    difficulty: "Hard",
+  },
+  {
+    id: "q3",
+    title: "Classic Cinema",
+    icon: "film",
+    color: "#3B82F6",
+    questions: 12,
+    difficulty: "Easy",
+  },
+  {
+    id: "q4",
+    title: "Plot Twists",
+    icon: "alert-triangle",
+    color: "#E91E8C",
+    questions: 10,
+    difficulty: "Hard",
+  },
+  {
+    id: "q5",
+    title: "Soundtrack IQ",
+    icon: "music",
+    color: "#1FD1A8",
+    questions: 8,
+    difficulty: "Easy",
+  },
+  {
+    id: "q6",
+    title: "Actor Spotlight",
+    icon: "user",
+    color: "#F97316",
+    questions: 18,
+    difficulty: "Medium",
+  },
 ];
 
 const LEADERBOARD = [
-  { rank: 1, user: "QuizMaster", avatar: "https://i.pravatar.cc/100?img=15", score: 4820, badge: "🥇" },
-  { rank: 2, user: "CineGeek", avatar: "https://i.pravatar.cc/100?img=20", score: 4510, badge: "🥈" },
-  { rank: 3, user: "FilmFreak", avatar: "https://i.pravatar.cc/100?img=25", score: 4130, badge: "🥉" },
-  { rank: 4, user: "MovieNerd99", avatar: "https://i.pravatar.cc/100?img=30", score: 3980, badge: "" },
-  { rank: 5, user: "You", avatar: "https://i.pravatar.cc/100?img=35", score: 3750, badge: "", isMe: true },
+  {
+    rank: 1,
+    user: "QuizMaster",
+    avatar: "https://i.pravatar.cc/100?img=15",
+    score: 4820,
+    badge: "🥇",
+  },
+  {
+    rank: 2,
+    user: "CineGeek",
+    avatar: "https://i.pravatar.cc/100?img=20",
+    score: 4510,
+    badge: "🥈",
+  },
+  {
+    rank: 3,
+    user: "FilmFreak",
+    avatar: "https://i.pravatar.cc/100?img=25",
+    score: 4130,
+    badge: "🥉",
+  },
+  {
+    rank: 4,
+    user: "MovieNerd99",
+    avatar: "https://i.pravatar.cc/100?img=30",
+    score: 3980,
+    badge: "",
+  },
+  {
+    rank: 5,
+    user: "You",
+    avatar: "https://i.pravatar.cc/100?img=35",
+    score: 3750,
+    badge: "",
+    isMe: true,
+  },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function QuizCard({ quiz }: { quiz: (typeof QUIZ_CATEGORIES)[0] }) {
-  const difficultyColor = {
-    Easy: "#22C55E",
-    Medium: "#F5C518",
-    Hard: "#E84545",
-  }[quiz.difficulty] ?? "#8A8A9E";
+  const difficultyColor =
+    {
+      Easy: "#22C55E",
+      Medium: "#F5C518",
+      Hard: "#E84545",
+    }[quiz.difficulty] ?? "#8A8A9E";
 
   return (
     <Pressable
@@ -70,10 +151,15 @@ function QuizCard({ quiz }: { quiz: (typeof QUIZ_CATEGORIES)[0] }) {
           marginBottom: 10,
         }}
       >
-        <Feather name={quiz.icon as any} size={22} color={quiz.color} />
+        <HugeiconsIcon icon={quiz.icon as any} size={22} color={quiz.color} />
       </View>
       <Text
-        style={{ color: "#F0F0F8", fontWeight: "800", fontSize: 14, marginBottom: 4 }}
+        style={{
+          color: "#F0F0F8",
+          fontWeight: "800",
+          fontSize: 14,
+          marginBottom: 4,
+        }}
         numberOfLines={2}
       >
         {quiz.title}
@@ -90,7 +176,9 @@ function QuizCard({ quiz }: { quiz: (typeof QUIZ_CATEGORIES)[0] }) {
           alignSelf: "flex-start",
         }}
       >
-        <Text style={{ color: difficultyColor, fontSize: 10, fontWeight: "700" }}>
+        <Text
+          style={{ color: difficultyColor, fontSize: 10, fontWeight: "700" }}
+        >
           {quiz.difficulty}
         </Text>
       </View>
@@ -113,7 +201,9 @@ export default function GamesScreen() {
     <View style={{ flex: 1, backgroundColor: "#080810" }}>
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         {/* Header */}
-        <View style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 4 }}>
+        <View
+          style={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 4 }}
+        >
           <Text style={{ color: "#F0F0F8", fontSize: 22, fontWeight: "900" }}>
             ⚡ Games & Trivia
           </Text>
@@ -122,7 +212,10 @@ export default function GamesScreen() {
           </Text>
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
           {/* Streak Banner */}
           <LinearGradient
             colors={["#F97316", "#F5C518"]}
@@ -137,10 +230,23 @@ export default function GamesScreen() {
             }}
           >
             <View style={{ flex: 1 }}>
-              <Text style={{ color: "rgba(0,0,0,0.7)", fontSize: 11, fontWeight: "700" }}>
+              <Text
+                style={{
+                  color: "rgba(0,0,0,0.7)",
+                  fontSize: 11,
+                  fontWeight: "700",
+                }}
+              >
                 🔥 CURRENT STREAK
               </Text>
-              <Text style={{ color: "#000", fontSize: 28, fontWeight: "900", marginTop: 2 }}>
+              <Text
+                style={{
+                  color: "#000",
+                  fontSize: 28,
+                  fontWeight: "900",
+                  marginTop: 2,
+                }}
+              >
                 {DAILY_CHALLENGE.streak} Days
               </Text>
               <Text style={{ color: "rgba(0,0,0,0.6)", fontSize: 12 }}>
@@ -154,8 +260,21 @@ export default function GamesScreen() {
 
           {/* Daily Challenge */}
           <View style={{ marginHorizontal: 16, marginBottom: 24 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
-              <Text style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800", flex: 1 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 12,
+              }}
+            >
+              <Text
+                style={{
+                  color: "#F0F0F8",
+                  fontSize: 17,
+                  fontWeight: "800",
+                  flex: 1,
+                }}
+              >
                 🎯 Daily Challenge
               </Text>
               <View
@@ -168,7 +287,9 @@ export default function GamesScreen() {
                   borderColor: "rgba(245,197,24,0.3)",
                 }}
               >
-                <Text style={{ color: "#F5C518", fontSize: 11, fontWeight: "700" }}>
+                <Text
+                  style={{ color: "#F5C518", fontSize: 11, fontWeight: "700" }}
+                >
                   +{DAILY_CHALLENGE.xpReward} XP
                 </Text>
               </View>
@@ -183,7 +304,15 @@ export default function GamesScreen() {
                 borderColor: "#1A1A26",
               }}
             >
-              <Text style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "700", lineHeight: 22, marginBottom: 16 }}>
+              <Text
+                style={{
+                  color: "#F0F0F8",
+                  fontSize: 16,
+                  fontWeight: "700",
+                  lineHeight: 22,
+                  marginBottom: 16,
+                }}
+              >
                 {DAILY_CHALLENGE.question}
               </Text>
               {DAILY_CHALLENGE.options.map((opt, idx) => {
@@ -232,31 +361,52 @@ export default function GamesScreen() {
                         width: 28,
                         height: 28,
                         borderRadius: 14,
-                        backgroundColor: showResult && isCorrect ? "#22C55E" : "#1A1A26",
+                        backgroundColor:
+                          showResult && isCorrect ? "#22C55E" : "#1A1A26",
                         alignItems: "center",
                         justifyContent: "center",
                       }}
                     >
-                      <Text style={{ color: showResult && isCorrect ? "#fff" : "#8A8A9E", fontWeight: "700", fontSize: 12 }}>
+                      <Text
+                        style={{
+                          color: showResult && isCorrect ? "#fff" : "#8A8A9E",
+                          fontWeight: "700",
+                          fontSize: 12,
+                        }}
+                      >
                         {String.fromCharCode(65 + idx)}
                       </Text>
                     </View>
-                    <Text style={{ color: textColor, fontWeight: "600", fontSize: 14, flex: 1 }}>
+                    <Text
+                      style={{
+                        color: textColor,
+                        fontWeight: "600",
+                        fontSize: 14,
+                        flex: 1,
+                      }}
+                    >
                       {opt}
                     </Text>
                     {showResult && isCorrect && (
-                      <Feather name="check-circle" size={18} color="#22C55E" />
+                      <HugeiconsIcon
+                        icon={CircleCheckBigIcon}
+                        size={18}
+                        color="#22C55E"
+                      />
                     )}
                     {showResult && isSelected && !isCorrect && (
-                      <Feather name="x-circle" size={18} color="#E84545" />
-                    )}
+                      <HugeiconsIcon icon = {CircleXIcon} size={18} color="#E84545" />
+                    )}HugeiconsIcon
                   </Pressable>
                 );
               })}
 
               {answered && (
                 <Pressable
-                  onPress={() => { setAnswered(false); setSelectedOption(null); }}
+                  onPress={() => {
+                    setAnswered(false);
+                    setSelectedOption(null);
+                  }}
                   style={{
                     marginTop: 8,
                     backgroundColor: "#F5C518",
@@ -265,7 +415,13 @@ export default function GamesScreen() {
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: "#080810", fontWeight: "700", fontSize: 14 }}>
+                  <Text
+                    style={{
+                      color: "#080810",
+                      fontWeight: "700",
+                      fontSize: 14,
+                    }}
+                  >
                     Next Question →
                   </Text>
                 </Pressable>
@@ -275,10 +431,23 @@ export default function GamesScreen() {
 
           {/* Quiz Categories */}
           <View style={{ paddingHorizontal: 16, marginBottom: 24 }}>
-            <Text style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800", marginBottom: 14 }}>
+            <Text
+              style={{
+                color: "#F0F0F8",
+                fontSize: 17,
+                fontWeight: "800",
+                marginBottom: 14,
+              }}
+            >
               📚 Quiz Categories
             </Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+              }}
+            >
               {QUIZ_CATEGORIES.map((quiz) => (
                 <QuizCard key={quiz.id} quiz={quiz} />
               ))}
@@ -287,7 +456,14 @@ export default function GamesScreen() {
 
           {/* Leaderboard */}
           <View style={{ paddingHorizontal: 16 }}>
-            <Text style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800", marginBottom: 14 }}>
+            <Text
+              style={{
+                color: "#F0F0F8",
+                fontSize: 17,
+                fontWeight: "800",
+                marginBottom: 14,
+              }}
+            >
               🏆 Leaderboard
             </Text>
             <View
@@ -308,7 +484,9 @@ export default function GamesScreen() {
                     padding: 14,
                     borderBottomWidth: i < LEADERBOARD.length - 1 ? 1 : 0,
                     borderBottomColor: "#1A1A26",
-                    backgroundColor: (entry as any).isMe ? "rgba(245,197,24,0.05)" : "transparent",
+                    backgroundColor: (entry as any).isMe
+                      ? "rgba(245,197,24,0.05)"
+                      : "transparent",
                   }}
                 >
                   <Text style={{ fontSize: 20, width: 32 }}>
@@ -316,7 +494,12 @@ export default function GamesScreen() {
                   </Text>
                   <Image
                     source={{ uri: entry.avatar }}
-                    style={{ width: 36, height: 36, borderRadius: 18, marginHorizontal: 10 }}
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 18,
+                      marginHorizontal: 10,
+                    }}
                   />
                   <Text
                     style={{
@@ -329,7 +512,13 @@ export default function GamesScreen() {
                     {entry.user}
                     {(entry as any).isMe && " (You)"}
                   </Text>
-                  <Text style={{ color: "#8A8A9E", fontWeight: "700", fontSize: 14 }}>
+                  <Text
+                    style={{
+                      color: "#8A8A9E",
+                      fontWeight: "700",
+                      fontSize: 14,
+                    }}
+                  >
                     {entry.score.toLocaleString()} XP
                   </Text>
                 </View>

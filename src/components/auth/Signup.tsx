@@ -1,8 +1,14 @@
+import SocialLogin from "@/components/auth/Googlebutton";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
-import SocialLogin from "@/components/auth/Googlebutton";
 
+import {
+  AtIcon,
+  LockPasswordIcon,
+  Mail01Icon,
+  User02Icon,
+} from "@hugeicons/core-free-icons";
 import AuthTextField from "./Authtextfield ";
 import PrimaryButton from "./Primarybutton";
 
@@ -89,7 +95,7 @@ export default function SignupScreen() {
     <View className="flex-1 bg-background">
       <AuthTextField
         label="Display Name"
-        icon="user"
+        icon={User02Icon}
         placeholder="Your full name or nickname"
         value={displayName}
         onChangeText={(text) => {
@@ -101,7 +107,7 @@ export default function SignupScreen() {
 
       <AuthTextField
         label="Username"
-        icon="at-sign"
+        icon={AtIcon}
         placeholder="Choose a unique username"
         value={username}
         onChangeText={(text) => {
@@ -113,7 +119,7 @@ export default function SignupScreen() {
 
       <AuthTextField
         label="Email"
-        icon="mail"
+        icon={Mail01Icon}
         placeholder="Enter your email"
         keyboardType="email-address"
         value={email}
@@ -126,7 +132,7 @@ export default function SignupScreen() {
 
       <AuthTextField
         label="Password"
-        icon="lock"
+        icon={LockPasswordIcon}
         placeholder="Min 8 chars, 1 number, 1 symbol"
         isPassword
         value={password}
@@ -139,7 +145,7 @@ export default function SignupScreen() {
 
       <AuthTextField
         label="Confirm Password"
-        icon="lock"
+        icon={LockPasswordIcon}
         placeholder="Confirm your password"
         isPassword
         value={confirmPassword}

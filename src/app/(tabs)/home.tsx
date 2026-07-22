@@ -1,18 +1,34 @@
-import React, { useState, useRef } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Dimensions,
-  ImageBackground,
-  FlatList,
-  Image,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+  Alert02Icon,
+  ArrowRight02Icon,
+  BellIcon,
+  CpuIcon,
+  HeartIcon,
+  Menu09Icon,
+  Message01Icon,
+  Moon02Icon,
+  PlayIcon,
+  PlusSignIcon,
+  Share08Icon,
+  SmileIcon,
+  StarIcon,
+  ZapIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import Feather from "@react-native-vector-icons/feather";
+import { useState } from "react";
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width: SCREEN_W } = Dimensions.get("window");
 
@@ -56,38 +72,42 @@ const TRENDING = [
     title: "The Brutalist",
     rating: "7.9",
     genre: "Drama",
-    image: "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&q=80",
   },
   {
     id: "t2",
     title: "Anora",
     rating: "8.1",
     genre: "Romance",
-    image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80",
   },
   {
     id: "t3",
     title: "A Real Pain",
     rating: "7.8",
     genre: "Drama",
-    image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80",
   },
   {
     id: "t4",
     title: "Conclave",
     rating: "7.6",
     genre: "Thriller",
-    image: "https://images.unsplash.com/photo-1584985329182-35d6a4a9f0d8?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584985329182-35d6a4a9f0d8?w=400&q=80",
   },
 ];
 
 const CATEGORIES = [
-  { id: "c1", label: "Action", icon: "zap", color: "#F97316" },
-  { id: "c2", label: "Drama", icon: "heart", color: "#E91E8C" },
-  { id: "c3", label: "Sci-Fi", icon: "cpu", color: "#3B82F6" },
-  { id: "c4", label: "Comedy", icon: "smile", color: "#22C55E" },
-  { id: "c5", label: "Horror", icon: "moon", color: "#7C5CFC" },
-  { id: "c6", label: "Thriller", icon: "alert-triangle", color: "#F5C518" },
+  { id: "c1", label: "Action", icon: ZapIcon, color: "#F97316" },
+  { id: "c2", label: "Drama", icon: HeartIcon, color: "#E91E8C" },
+  { id: "c3", label: "Sci-Fi", icon: CpuIcon, color: "#3B82F6" },
+  { id: "c4", label: "Comedy", icon: SmileIcon, color: "#22C55E" },
+  { id: "c5", label: "Horror", icon: Moon02Icon, color: "#7C5CFC" },
+  { id: "c6", label: "Thriller", icon: Alert02Icon, color: "#F5C518" },
 ];
 
 const COMMUNITY_POSTS = [
@@ -95,7 +115,8 @@ const COMMUNITY_POSTS = [
     id: "p1",
     user: "CinemaFreak",
     avatar: "https://i.pravatar.cc/100?img=1",
-    content: "Dune Part Two is a visual masterpiece. Denis Villeneuve has done it again! 🎬",
+    content:
+      "Dune Part Two is a visual masterpiece. Denis Villeneuve has done it again! 🎬",
     time: "2h ago",
     likes: 142,
     comments: 38,
@@ -105,7 +126,8 @@ const COMMUNITY_POSTS = [
     id: "p2",
     user: "FilmNerd99",
     avatar: "https://i.pravatar.cc/100?img=5",
-    content: "Hot take: Oppenheimer deserved every single Oscar it got. The practical effects alone were unreal.",
+    content:
+      "Hot take: Oppenheimer deserved every single Oscar it got. The practical effects alone were unreal.",
     time: "5h ago",
     likes: 89,
     comments: 24,
@@ -138,17 +160,40 @@ function HeroSlide({ item }: { item: (typeof FEATURED)[0] }) {
             marginBottom: 8,
           }}
         >
-          <Text style={{ color: "#F5C518", fontSize: 10, fontWeight: "700", letterSpacing: 1 }}>
+          <Text
+            style={{
+              color: "#F5C518",
+              fontSize: 10,
+              fontWeight: "700",
+              letterSpacing: 1,
+            }}
+          >
             ★ {item.rating} · {item.year}
           </Text>
         </View>
-        <Text style={{ color: "#F0F0F8", fontSize: 28, fontWeight: "900", lineHeight: 32, marginBottom: 4 }}>
+        <Text
+          style={{
+            color: "#F0F0F8",
+            fontSize: 28,
+            fontWeight: "900",
+            lineHeight: 32,
+            marginBottom: 4,
+          }}
+        >
           {item.title}
         </Text>
         <Text style={{ color: "#8A8A9E", fontSize: 13, marginBottom: 4 }}>
           {item.genre}
         </Text>
-        <Text style={{ color: "#F0F0F8", fontSize: 12, fontStyle: "italic", opacity: 0.8, marginBottom: 16 }}>
+        <Text
+          style={{
+            color: "#F0F0F8",
+            fontSize: 12,
+            fontStyle: "italic",
+            opacity: 0.8,
+            marginBottom: 16,
+          }}
+        >
           "{item.tagline}"
         </Text>
         <View style={{ flexDirection: "row", gap: 10 }}>
@@ -163,7 +208,7 @@ function HeroSlide({ item }: { item: (typeof FEATURED)[0] }) {
               gap: 6,
             }}
           >
-            <Feather name="play" size={14} color="#080810" />
+            <HugeiconsIcon icon={PlayIcon} size={14} color="#080810" />
             <Text style={{ color: "#080810", fontWeight: "700", fontSize: 13 }}>
               Watch Trailer
             </Text>
@@ -181,7 +226,7 @@ function HeroSlide({ item }: { item: (typeof FEATURED)[0] }) {
               borderColor: "#333344",
             }}
           >
-            <Feather name="plus" size={14} color="#F0F0F8" />
+            <HugeiconsIcon icon={PlusSignIcon} size={14} color="#F0F0F8" />
             <Text style={{ color: "#F0F0F8", fontWeight: "600", fontSize: 13 }}>
               Watchlist
             </Text>
@@ -214,12 +259,20 @@ function MovieCard({ item }: { item: (typeof TRENDING)[0] }) {
           gap: 3,
         }}
       >
-        <Feather name="star" size={10} color="#F5C518" />
+        <HugeiconsIcon icon={StarIcon} size={10} color="#F5C518" />
         <Text style={{ color: "#F5C518", fontSize: 10, fontWeight: "700" }}>
           {item.rating}
         </Text>
       </View>
-      <Text style={{ color: "#F0F0F8", fontSize: 12, fontWeight: "700", lineHeight: 16 }} numberOfLines={2}>
+      <Text
+        style={{
+          color: "#F0F0F8",
+          fontSize: 12,
+          fontWeight: "700",
+          lineHeight: 16,
+        }}
+        numberOfLines={2}
+      >
         {item.title}
       </Text>
       <Text style={{ color: "#8A8A9E", fontSize: 11, marginTop: 2 }}>
@@ -245,7 +298,7 @@ function CategoryPill({ item }: { item: (typeof CATEGORIES)[0] }) {
         marginRight: 8,
       }}
     >
-      <Feather name={item.icon as any} size={14} color={item.color} />
+      <HugeiconsIcon icon={item.icon} size={14} color={item.color} />
       <Text style={{ color: item.color, fontWeight: "600", fontSize: 13 }}>
         {item.label}
       </Text>
@@ -267,7 +320,9 @@ function CommunityPostCard({ item }: { item: (typeof COMMUNITY_POSTS)[0] }) {
         borderColor: "#1A1A26",
       }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}
+      >
         <Image
           source={{ uri: item.avatar }}
           style={{ width: 36, height: 36, borderRadius: 18, marginRight: 10 }}
@@ -291,7 +346,14 @@ function CommunityPostCard({ item }: { item: (typeof COMMUNITY_POSTS)[0] }) {
           </Text>
         </View>
       </View>
-      <Text style={{ color: "#C8C8D8", fontSize: 14, lineHeight: 20, marginBottom: 12 }}>
+      <Text
+        style={{
+          color: "#C8C8D8",
+          fontSize: 14,
+          lineHeight: 20,
+          marginBottom: 12,
+        }}
+      >
         {item.content}
       </Text>
       <View style={{ flexDirection: "row", gap: 20 }}>
@@ -299,17 +361,27 @@ function CommunityPostCard({ item }: { item: (typeof COMMUNITY_POSTS)[0] }) {
           onPress={() => setLiked((p) => !p)}
           style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
         >
-          <Feather name="heart" size={15} color={liked ? "#E91E8C" : "#8A8A9E"} />
+          <HugeiconsIcon
+            icon={HeartIcon}
+            size={15}
+            color={liked ? "#E91E8C" : "#8A8A9E"}
+          />
           <Text style={{ color: liked ? "#E91E8C" : "#8A8A9E", fontSize: 13 }}>
             {liked ? item.likes + 1 : item.likes}
           </Text>
         </Pressable>
-        <Pressable style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Feather name="message-circle" size={15} color="#8A8A9E" />
-          <Text style={{ color: "#8A8A9E", fontSize: 13 }}>{item.comments}</Text>
+        <Pressable
+          style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+        >
+          <HugeiconsIcon icon={Message01Icon} size={15} color="#8A8A9E" />
+          <Text style={{ color: "#8A8A9E", fontSize: 13 }}>
+            {item.comments}
+          </Text>
         </Pressable>
-        <Pressable style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Feather name="share-2" size={15} color="#8A8A9E" />
+        <Pressable
+          style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+        >
+          <HugeiconsIcon icon={Share08Icon} size={15} color="#8A8A9E" />
           <Text style={{ color: "#8A8A9E", fontSize: 13 }}>Share</Text>
         </Pressable>
       </View>
@@ -335,8 +407,17 @@ export default function HomeScreen() {
           }}
         >
           <View style={{ flex: 1 }}>
-            <Text style={{ color: "#8A8A9E", fontSize: 12 }}>Good evening 👋</Text>
-            <Text style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "800", marginTop: 1 }}>
+            <Text style={{ color: "#8A8A9E", fontSize: 12 }}>
+              Good evening 👋
+            </Text>
+            <Text
+              style={{
+                color: "#F0F0F8",
+                fontSize: 20,
+                fontWeight: "800",
+                marginTop: 1,
+              }}
+            >
               Filmy Frolic
             </Text>
           </View>
@@ -353,7 +434,7 @@ export default function HomeScreen() {
               borderColor: "#1A1A26",
             }}
           >
-            <Feather name="bell" size={18} color="#8A8A9E" />
+            <HugeiconsIcon icon={BellIcon} size={18} color="#8A8A9E" />
           </Pressable>
           <Pressable
             style={{
@@ -367,7 +448,7 @@ export default function HomeScreen() {
               borderColor: "#1A1A26",
             }}
           >
-            <Feather name="menu" size={18} color="#8A8A9E" />
+            <HugeiconsIcon icon={Menu09Icon} size={18} color="#8A8A9E" />
           </Pressable>
         </View>
 
@@ -382,7 +463,7 @@ export default function HomeScreen() {
             renderItem={({ item }) => <HeroSlide item={item} />}
             onMomentumScrollEnd={(e) => {
               setActiveSlide(
-                Math.round(e.nativeEvent.contentOffset.x / SCREEN_W)
+                Math.round(e.nativeEvent.contentOffset.x / SCREEN_W),
               );
             }}
           />
@@ -419,11 +500,15 @@ export default function HomeScreen() {
                 marginBottom: 12,
               }}
             >
-              <Text style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800" }}>
+              <Text
+                style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800" }}
+              >
                 Browse Genres
               </Text>
               <Pressable>
-                <Text style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}>
+                <Text
+                  style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}
+                >
                   See all
                 </Text>
               </Pressable>
@@ -450,11 +535,15 @@ export default function HomeScreen() {
                 marginBottom: 12,
               }}
             >
-              <Text style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800" }}>
+              <Text
+                style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800" }}
+              >
                 🔥 Trending Now
               </Text>
-              <Pressable onPress={() => router.push("/(tabs)/explore")}>
-                <Text style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}>
+              <Pressable>
+                <Text
+                  style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}
+                >
                   See all
                 </Text>
               </Pressable>
@@ -481,11 +570,15 @@ export default function HomeScreen() {
                 marginBottom: 12,
               }}
             >
-              <Text style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800" }}>
+              <Text
+                style={{ color: "#F0F0F8", fontSize: 17, fontWeight: "800" }}
+              >
                 💬 Community Buzz
               </Text>
-              <Pressable onPress={() => router.push("/(tabs)/social")}>
-                <Text style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}>
+              <Pressable>
+                <Text
+                  style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}
+                >
                   See all
                 </Text>
               </Pressable>
@@ -496,25 +589,48 @@ export default function HomeScreen() {
           </View>
 
           {/* Daily Challenge Banner */}
-          <Pressable
-            onPress={() => router.push("/(tabs)/games")}
-            style={{ margin: 16, marginTop: 12 }}
-          >
+          <Pressable style={{ margin: 16, marginTop: 12 }}>
             <LinearGradient
               colors={["#7C5CFC", "#E91E8C"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{ borderRadius: 16, padding: 20 }}
             >
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 11, fontWeight: "600", letterSpacing: 1 }}>
+                  <Text
+                    style={{
+                      color: "rgba(255,255,255,0.8)",
+                      fontSize: 11,
+                      fontWeight: "600",
+                      letterSpacing: 1,
+                    }}
+                  >
                     DAILY CHALLENGE
                   </Text>
-                  <Text style={{ color: "#fff", fontSize: 20, fontWeight: "900", marginTop: 4 }}>
+                  <Text
+                    style={{
+                      color: "#fff",
+                      fontSize: 20,
+                      fontWeight: "900",
+                      marginTop: 4,
+                    }}
+                  >
                     Film IQ Quiz ⚡
                   </Text>
-                  <Text style={{ color: "rgba(255,255,255,0.75)", fontSize: 13, marginTop: 4 }}>
+                  <Text
+                    style={{
+                      color: "rgba(255,255,255,0.75)",
+                      fontSize: 13,
+                      marginTop: 4,
+                    }}
+                  >
                     Test your movie knowledge today!
                   </Text>
                 </View>
@@ -528,7 +644,11 @@ export default function HomeScreen() {
                     justifyContent: "center",
                   }}
                 >
-                  <Feather name="arrow-right" size={22} color="#fff" />
+                  <HugeiconsIcon
+                    icon={ArrowRight02Icon}
+                    size={22}
+                    color="#fff"
+                  />
                 </View>
               </View>
             </LinearGradient>

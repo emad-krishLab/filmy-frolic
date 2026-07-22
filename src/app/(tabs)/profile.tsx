@@ -1,15 +1,15 @@
-import React, { useState } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Image,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+  ChevronLeftIcon,
+  Edit01Icon,
+  HeartIcon,
+  Settings01Icon,
+  StarIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import Feather from "@react-native-vector-icons/feather";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 const USER = {
@@ -34,10 +34,30 @@ const USER = {
 };
 
 const WATCHLIST = [
-  { id: "w1", title: "Dune: Part Two", image: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=400&q=80" },
-  { id: "w2", title: "The Brutalist", image: "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&q=80" },
-  { id: "w3", title: "Conclave", image: "https://images.unsplash.com/photo-1584985329182-35d6a4a9f0d8?w=400&q=80" },
-  { id: "w4", title: "Anora", image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80" },
+  {
+    id: "w1",
+    title: "Dune: Part Two",
+    image:
+      "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=400&q=80",
+  },
+  {
+    id: "w2",
+    title: "The Brutalist",
+    image:
+      "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&q=80",
+  },
+  {
+    id: "w3",
+    title: "Conclave",
+    image:
+      "https://images.unsplash.com/photo-1584985329182-35d6a4a9f0d8?w=400&q=80",
+  },
+  {
+    id: "w4",
+    title: "Anora",
+    image:
+      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80",
+  },
 ];
 
 const MY_REVIEWS = [
@@ -45,19 +65,23 @@ const MY_REVIEWS = [
     id: "r1",
     movie: "Oppenheimer",
     rating: 9,
-    snippet: "Nolan's magnum opus — a visceral, cerebral experience that demands to be seen on the largest screen possible.",
+    snippet:
+      "Nolan's magnum opus — a visceral, cerebral experience that demands to be seen on the largest screen possible.",
     time: "3 days ago",
     likes: 145,
-    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80",
   },
   {
     id: "r2",
     movie: "Poor Things",
     rating: 8,
-    snippet: "A delightfully absurd piece of art. Yorgos Lanthimos at his most accessible and Emma Stone in career-best form.",
+    snippet:
+      "A delightfully absurd piece of art. Yorgos Lanthimos at his most accessible and Emma Stone in career-best form.",
     time: "1 week ago",
     likes: 98,
-    image: "https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&q=80",
   },
 ];
 
@@ -74,8 +98,12 @@ const SETTINGS_ITEMS = [
 function StatBox({ label, value }: { label: string; value: string | number }) {
   return (
     <View style={{ alignItems: "center", flex: 1 }}>
-      <Text style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "900" }}>{value}</Text>
-      <Text style={{ color: "#8A8A9E", fontSize: 11, marginTop: 2 }}>{label}</Text>
+      <Text style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "900" }}>
+        {value}
+      </Text>
+      <Text style={{ color: "#8A8A9E", fontSize: 11, marginTop: 2 }}>
+        {label}
+      </Text>
     </View>
   );
 }
@@ -95,8 +123,17 @@ export default function ProfileScreen() {
             style={{ padding: 20, paddingTop: 16 }}
           >
             {/* Top Row */}
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-              <Text style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "900" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 20,
+              }}
+            >
+              <Text
+                style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "900" }}
+              >
                 Profile
               </Text>
               <Pressable
@@ -111,12 +148,23 @@ export default function ProfileScreen() {
                   borderColor: "#1A1A26",
                 }}
               >
-                <Feather name="settings" size={17} color="#8A8A9E" />
+                <HugeiconsIcon
+                  icon={Settings01Icon}
+                  size={17}
+                  color="#8A8A9E"
+                />
               </Pressable>
             </View>
 
             {/* Avatar + Name */}
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 16, marginBottom: 16 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 16,
+                marginBottom: 16,
+              }}
+            >
               <View style={{ position: "relative" }}>
                 <Image
                   source={{ uri: USER.avatar }}
@@ -143,17 +191,26 @@ export default function ProfileScreen() {
                     borderColor: "#080810",
                   }}
                 >
-                  <Feather name="edit-2" size={11} color="#080810" />
+                  <HugeiconsIcon icon={Edit01Icon} size={11} color="#080810" />
                 </View>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "900" }}>
+                <Text
+                  style={{ color: "#F0F0F8", fontSize: 20, fontWeight: "900" }}
+                >
                   {USER.name}
                 </Text>
                 <Text style={{ color: "#8A8A9E", fontSize: 13, marginTop: 2 }}>
                   {USER.username}
                 </Text>
-                <Text style={{ color: "#C8C8D8", fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+                <Text
+                  style={{
+                    color: "#C8C8D8",
+                    fontSize: 12,
+                    marginTop: 6,
+                    lineHeight: 17,
+                  }}
+                >
                   {USER.bio}
                 </Text>
               </View>
@@ -175,7 +232,10 @@ export default function ProfileScreen() {
               <View style={{ width: 1, backgroundColor: "#1A1A26" }} />
               <StatBox label="Reviews" value={USER.reviews} />
               <View style={{ width: 1, backgroundColor: "#1A1A26" }} />
-              <StatBox label="Followers" value={USER.followers.toLocaleString()} />
+              <StatBox
+                label="Followers"
+                value={USER.followers.toLocaleString()}
+              />
               <View style={{ width: 1, backgroundColor: "#1A1A26" }} />
               <StatBox label="Following" value={USER.following} />
             </View>
@@ -190,8 +250,17 @@ export default function ProfileScreen() {
                 borderColor: "#1A1A26",
               }}
             >
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 8,
+                }}
+              >
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+                >
                   <View
                     style={{
                       backgroundColor: "#F5C518",
@@ -200,33 +269,65 @@ export default function ProfileScreen() {
                       paddingVertical: 2,
                     }}
                   >
-                    <Text style={{ color: "#080810", fontSize: 11, fontWeight: "900" }}>
+                    <Text
+                      style={{
+                        color: "#080810",
+                        fontSize: 11,
+                        fontWeight: "900",
+                      }}
+                    >
                       LVL {USER.level}
                     </Text>
                   </View>
-                  <Text style={{ color: "#F0F0F8", fontWeight: "700" }}>Film Buff</Text>
+                  <Text style={{ color: "#F0F0F8", fontWeight: "700" }}>
+                    Film Buff
+                  </Text>
                 </View>
                 <Text style={{ color: "#8A8A9E", fontSize: 12 }}>
                   {USER.xp} / {USER.nextLevelXP} XP
                 </Text>
               </View>
-              <View style={{ backgroundColor: "#1A1A26", borderRadius: 6, height: 8, overflow: "hidden" }}>
+              <View
+                style={{
+                  backgroundColor: "#1A1A26",
+                  borderRadius: 6,
+                  height: 8,
+                  overflow: "hidden",
+                }}
+              >
                 <LinearGradient
                   colors={["#F5C518", "#F97316"]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  style={{ width: `${xpProgress}%`, height: "100%", borderRadius: 6 }}
+                  style={{
+                    width: `${xpProgress}%`,
+                    height: "100%",
+                    borderRadius: 6,
+                  }}
                 />
               </View>
             </View>
           </LinearGradient>
 
           {/* Badges */}
-          <View style={{ paddingHorizontal: 16, marginTop: 4, marginBottom: 24 }}>
-            <Text style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "800", marginBottom: 12 }}>
+          <View
+            style={{ paddingHorizontal: 16, marginTop: 4, marginBottom: 24 }}
+          >
+            <Text
+              style={{
+                color: "#F0F0F8",
+                fontSize: 16,
+                fontWeight: "800",
+                marginBottom: 12,
+              }}
+            >
               🏅 Badges
             </Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ gap: 10 }}
+            >
               {USER.badges.map((badge) => (
                 <View
                   key={badge.id}
@@ -243,7 +344,13 @@ export default function ProfileScreen() {
                   }}
                 >
                   <Text style={{ fontSize: 24 }}>{badge.icon}</Text>
-                  <Text style={{ color: badge.color, fontSize: 11, fontWeight: "700" }}>
+                  <Text
+                    style={{
+                      color: badge.color,
+                      fontSize: 11,
+                      fontWeight: "700",
+                    }}
+                  >
                     {badge.label}
                   </Text>
                 </View>
@@ -253,15 +360,32 @@ export default function ProfileScreen() {
 
           {/* Watchlist */}
           <View style={{ paddingHorizontal: 16, marginBottom: 24 }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <Text style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "800" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 12,
+              }}
+            >
+              <Text
+                style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "800" }}
+              >
                 🎬 My Watchlist
               </Text>
               <Pressable>
-                <Text style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}>See all</Text>
+                <Text
+                  style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}
+                >
+                  See all
+                </Text>
               </Pressable>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ gap: 10 }}
+            >
               {WATCHLIST.map((item) => (
                 <Pressable key={item.id}>
                   <Image
@@ -276,12 +400,25 @@ export default function ProfileScreen() {
 
           {/* My Reviews */}
           <View style={{ paddingHorizontal: 16, marginBottom: 24 }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <Text style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "800" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 12,
+              }}
+            >
+              <Text
+                style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "800" }}
+              >
                 ⭐ My Reviews
               </Text>
               <Pressable>
-                <Text style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}>See all</Text>
+                <Text
+                  style={{ color: "#F5C518", fontSize: 13, fontWeight: "600" }}
+                >
+                  See all
+                </Text>
               </Pressable>
             </View>
             {MY_REVIEWS.map((review) => (
@@ -304,31 +441,80 @@ export default function ProfileScreen() {
                   resizeMode="cover"
                 />
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#F0F0F8", fontWeight: "700", fontSize: 14, marginBottom: 4 }}>
+                  <Text
+                    style={{
+                      color: "#F0F0F8",
+                      fontWeight: "700",
+                      fontSize: 14,
+                      marginBottom: 4,
+                    }}
+                  >
                     {review.movie}
                   </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 3, marginBottom: 6 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 3,
+                      marginBottom: 6,
+                    }}
+                  >
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Feather
+                      <HugeiconsIcon
                         key={i}
-                        name="star"
+                        icon={StarIcon}
                         size={11}
-                        color={i <= Math.round(review.rating / 2) ? "#F5C518" : "#333344"}
+                        color={
+                          i <= Math.round(review.rating / 2)
+                            ? "#F5C518"
+                            : "#333344"
+                        }
                       />
                     ))}
-                    <Text style={{ color: "#F5C518", fontSize: 11, fontWeight: "700", marginLeft: 3 }}>
+                    <Text
+                      style={{
+                        color: "#F5C518",
+                        fontSize: 11,
+                        fontWeight: "700",
+                        marginLeft: 3,
+                      }}
+                    >
                       {review.rating}/10
                     </Text>
                   </View>
-                  <Text style={{ color: "#8A8A9E", fontSize: 12, lineHeight: 17 }} numberOfLines={2}>
+                  <Text
+                    style={{ color: "#8A8A9E", fontSize: 12, lineHeight: 17 }}
+                    numberOfLines={2}
+                  >
                     {review.snippet}
                   </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginTop: 8 }}>
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-                      <Feather name="heart" size={12} color="#8A8A9E" />
-                      <Text style={{ color: "#8A8A9E", fontSize: 11 }}>{review.likes}</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 12,
+                      marginTop: 8,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <HugeiconsIcon
+                        icon={HeartIcon}
+                        size={12}
+                        color="#8A8A9E"
+                      />
+                      <Text style={{ color: "#8A8A9E", fontSize: 11 }}>
+                        {review.likes}
+                      </Text>
                     </View>
-                    <Text style={{ color: "#5C5C6E", fontSize: 11 }}>{review.time}</Text>
+                    <Text style={{ color: "#5C5C6E", fontSize: 11 }}>
+                      {review.time}
+                    </Text>
                   </View>
                 </View>
               </Pressable>
@@ -337,7 +523,14 @@ export default function ProfileScreen() {
 
           {/* Settings Menu */}
           <View style={{ paddingHorizontal: 16, marginBottom: 30 }}>
-            <Text style={{ color: "#F0F0F8", fontSize: 16, fontWeight: "800", marginBottom: 12 }}>
+            <Text
+              style={{
+                color: "#F0F0F8",
+                fontSize: 16,
+                fontWeight: "800",
+                marginBottom: 12,
+              }}
+            >
               ⚙️ Account
             </Text>
             <View
@@ -354,7 +547,7 @@ export default function ProfileScreen() {
                   key={item.label}
                   onPress={() => {
                     if (item.label === "Sign Out") {
-                      router.replace("/(auth)/login");
+                      router.replace("/auth");
                     }
                   }}
                   style={{
@@ -376,7 +569,11 @@ export default function ProfileScreen() {
                       marginRight: 12,
                     }}
                   >
-                    <Feather name={item.icon as any} size={17} color={item.color} />
+                    <HugeiconsIcon
+                      icon={item.icon as any}
+                      size={17}
+                      color={item.color}
+                    />
                   </View>
                   <Text
                     style={{
@@ -389,7 +586,11 @@ export default function ProfileScreen() {
                     {item.label}
                   </Text>
                   {item.label !== "Sign Out" && (
-                    <Feather name="chevron-right" size={16} color="#5C5C6E" />
+                    <HugeiconsIcon
+                      icon={ChevronLeftIcon}
+                      size={16}
+                      color="#5C5C6E"
+                    />
                   )}
                 </Pressable>
               ))}

@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, Pressable, Text, View } from "react-native";
 
+import { LockPasswordIcon, Mail01Icon } from "@hugeicons/core-free-icons";
 import AuthTextField from "./Authtextfield ";
 import PrimaryButton from "./Primarybutton";
 
@@ -64,7 +65,7 @@ export default function LoginScreen() {
     <View>
       <AuthTextField
         label="Email"
-        icon="mail"
+        icon={Mail01Icon}
         placeholder="jhon@gmail.com"
         keyboardType="email-address"
         value={email}
@@ -78,7 +79,7 @@ export default function LoginScreen() {
 
       <AuthTextField
         label="Password"
-        icon="lock"
+        icon={LockPasswordIcon}
         placeholder="••••••••••"
         isPassword
         value={password}

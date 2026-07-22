@@ -1,16 +1,22 @@
-import React from "react";
+import {
+  Home01Icon,
+  MeetingRoomIcon,
+  Message02Icon,
+  User02Icon,
+  UserGroup02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react-native";
 import { Tabs } from "expo-router";
-import { View, Text, Pressable, Platform } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Feather from "@react-native-vector-icons/feather";
 
 // ─── Tab config ──────────────────────────────────────────────────────────────
 const TABS = [
-  { name: "home", label: "Home", icon: "home" },
-  { name: "explore", label: "Explore", icon: "search" },
-  { name: "social", label: "Social", icon: "users" },
-  { name: "games", label: "Games", icon: "zap" },
-  { name: "profile", label: "Profile", icon: "user" },
+  { name: "home", label: "Home", icon: Home01Icon },
+  { name: "communities", label: "Communities", icon: UserGroup02Icon },
+  { name: "rooms", label: "Rooms", icon: MeetingRoomIcon },
+  { name: "messages", label: "Messages", icon: Message02Icon },
+  { name: "profile", label: "Profile", icon: User02Icon },
 ] as const;
 
 // ─── Custom Tab Bar ───────────────────────────────────────────────────────────
@@ -26,7 +32,9 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
         borderTopColor: "#1A1A26",
       }}
     >
-      <View style={{ flexDirection: "row", paddingTop: 8, paddingHorizontal: 8 }}>
+      <View
+        style={{ flexDirection: "row", paddingTop: 8, paddingHorizontal: 8 }}
+      >
         {state.routes.map((route: any, index: number) => {
           const { options } = descriptors[route.key];
           const tab = TABS.find((t) => t.name === route.name);
@@ -71,14 +79,18 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
                   borderRadius: 14,
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: isFocused ? "rgba(245,197,24,0.12)" : "transparent",
+                  backgroundColor: isFocused
+                    ? "rgba(245,197,24,0.12)"
+                    : "transparent",
                 }}
               >
-                <Feather
-                  name={tab?.icon as any}
-                  size={22}
-                  color={isFocused ? "#F5C518" : "#8A8A9E"}
-                />
+                {tab && (
+                  <HugeiconsIcon
+                    icon={tab.icon}
+                    size={22}
+                    color={isFocused ? "#F5C518" : "#8A8A9E"}
+                  />
+                )}
               </View>
               <Text
                 style={{
@@ -106,9 +118,9 @@ export default function TabsLayout() {
       screenOptions={{ headerShown: false }}
     >
       <Tabs.Screen name="home" />
-      <Tabs.Screen name="explore" />
-      <Tabs.Screen name="social" />
-      <Tabs.Screen name="games" />
+      <Tabs.Screen name="communities" />
+      <Tabs.Screen name="rooms" />
+      <Tabs.Screen name="messages" />
       <Tabs.Screen name="profile" />
     </Tabs>
   );
