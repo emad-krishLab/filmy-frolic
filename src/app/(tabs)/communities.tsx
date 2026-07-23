@@ -20,7 +20,7 @@ import { useRouter } from "expo-router";
 
 export default function CommunitiesScreen() {
   const router = useRouter();
-  
+
   const [activeFilter, setActiveFilter] = useState<
     "All" | "Mine" | "Trending" | "Genre" | "New"
   >("All");
@@ -52,7 +52,7 @@ export default function CommunitiesScreen() {
               </View>
               <Pressable
                 className="bg-primary w-10 h-10 rounded-full items-center justify-center"
-                onPress={() => router.push("/create-community")}
+                onPress={() => router.push("/community/create")}
               >
                 <HugeiconsIcon icon={Add01Icon} size={20} color="#080810" />
               </Pressable>
@@ -81,7 +81,7 @@ export default function CommunitiesScreen() {
             <CommunityCard
               community={item}
               onJoin={() => console.log("join", item.id)}
-              onPress={() => console.log("open", item.id)}
+              onPress={() => router.push(`/community/${item.id}`)}
             />
           </View>
         )}

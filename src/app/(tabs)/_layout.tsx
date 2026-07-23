@@ -1,25 +1,75 @@
 import {
   Home01Icon,
-  MeetingRoomIcon,
   Message02Icon,
   User02Icon,
   UserGroup02Icon,
+  LiveStreaming02Icon
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react-native";
-import { Tabs } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { withLayoutContext } from "expo-router";
+import { createMaterialTopTabNavigator } from "expo-router/js-top-tabs";
+import { useEffect, useRef, useState } from "react";
+import { LayoutChangeEvent, Pressable, Text, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TABS = [
   { name: "home", label: "Home", icon: Home01Icon },
   { name: "communities", label: "Communities", icon: UserGroup02Icon },
-  { name: "rooms", label: "Rooms", icon: MeetingRoomIcon },
+  { name: "rooms", label: "Rooms", icon: LiveStreaming02Icon },
   { name: "messages", label: "Messages", icon: Message02Icon },
   { name: "profile", label: "Profile", icon: User02Icon },
 ] as const;
 
-function CustomTabBar({ state, descriptors, navigation }: any) {
+// ─── Custom tab bar ──────────────────────────────────────────────────────────
+function CustomTabBar({ state, navigation }: any) {
   const insets = useSafeAreaInsets();
+  const [layouts, setLayouts] = useState<
+    Record<number, { x: number; width: number }>
+  >({});
+
+  const pillX = useSharedValue(0);
+  const pillWidth = useSharedValue(44);
+  const hasMounted = useRef(false);
+
+  const pillStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: pillX.value }],
+    width: pillWidth.value,
+  }));
+
+  const movePill = (index: number) => {
+    const layout = layouts[index];
+    if (!layout) return;
+    // center a 44px pill within the measured tab width
+    const target = layout.x + layout.width / 2 - 22;
+    pillX.value = withSpring(target, { stiffness: 180 });
+    pillWidth.value = withSpring(44, { stiffness: 180 });
+  };
+
+  const handleLayout = (index: number) => (e: LayoutChangeEvent) => {
+    const { x, width } = e.nativeEvent.layout;
+    setLayouts((prev) => ({ ...prev, [index]: { x, width } }));
+  };
+
+  useEffect(() => {
+    const layout = layouts[state.index];
+    if (!layout) return;
+
+    const target = layout.x + layout.width / 2 - 22;
+
+    if (pillWidth.value === 44 && pillX.value === 0 && !hasMounted.current) {
+      // first paint: snap instantly, no animation
+      pillX.value = target;
+      hasMounted.current = true;
+    } else {
+      pillX.value = withSpring(target, { stiffness: 180 });
+    }
+    pillWidth.value = withSpring(44, { stiffness: 180 });
+  }, [state.index, layouts]);
 
   return (
     <View
@@ -31,10 +81,28 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
       }}
     >
       <View
-        style={{ flexDirection: "row", paddingTop: 8, paddingHorizontal: 8 }}
+        style={{
+          flexDirection: "row",
+          justifyContent: "center", 
+          paddingTop: 8,
+        }}
       >
+        
+        <Animated.View
+          style={[
+            {
+              position: "absolute",
+              left: 0, // ← pins the anchor to the row's left edge
+              top: 8,
+              height: 44,
+              borderRadius: 18,
+              backgroundColor: "rgba(245,197,24,0.12)",
+            },
+            pillStyle,
+          ]}
+        />
+
         {state.routes.map((route: any, index: number) => {
-          const { options } = descriptors[route.key];
           const tab = TABS.find((t) => t.name === route.name);
           const isFocused = state.index === index;
 
@@ -53,23 +121,15 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
             <Pressable
               key={route.key}
               onPress={onPress}
-              style={{ flex: 1, alignItems: "center", paddingBottom: 8 }}
+              onLayout={handleLayout(index)}
+              style={{
+                alignItems: "center",
+                paddingHorizontal: 18,
+                paddingBottom: 8,
+              }}
               accessibilityRole="tab"
               accessibilityState={{ selected: isFocused }}
             >
-              {/* Active indicator pill
-              {isFocused && (
-                <View
-                  style={{
-                    position: "absolute",
-                    top: -8,
-                    width: 32,
-                    height: 3,
-                    borderRadius: 2,
-                    backgroundColor: "#F5C518",
-                  }}
-                />
-              )} */}
               <View
                 style={{
                   width: 44,
@@ -77,9 +137,6 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
                   borderRadius: 18,
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: isFocused
-                    ? "rgba(245,197,24,0.12)"
-                    : "transparent",
                 }}
               >
                 {tab && (
@@ -108,12 +165,18 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
   );
 }
 
+// ─── Material top tabs, repositioned to the bottom ──────────────────────────
+const { Navigator } = createMaterialTopTabNavigator();
+
+const Tabs: any = withLayoutContext(Navigator);
+
 // ─── Tabs Layout ─────────────────────────────────────────────────────────────
 export default function TabsLayout() {
   return (
     <Tabs
-      tabBar={(props) => <CustomTabBar {...props} />}
-      screenOptions={{ headerShown: false }}
+      tabBarPosition="bottom"
+      tabBar={(props: any) => <CustomTabBar {...props} />}
+      screenOptions={{ swipeEnabled: true, lazy: true }}
     >
       <Tabs.Screen name="home" />
       <Tabs.Screen name="communities" />

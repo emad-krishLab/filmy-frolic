@@ -102,3 +102,43 @@ export const GENRES = [
 ];
 
 export const MAX_GENRES = 3;
+
+
+export type CommunityTab = 'Feed' | 'About' | 'Members' | 'Events' | 'Media' | 'Rules';
+
+export interface CommunityDetail {
+  id: string;
+  name: string;
+  icon: string;
+  bannerUrl: string;
+  memberCount: number;
+  postsToday: number;
+  description: string;
+  isJoined: boolean;
+  isPublic: boolean;
+}
+
+export interface CommunityPost {
+  id: string;
+  authorName: string;
+  authorAvatar?: string;
+  content: string;
+  createdAt: string;
+  likeCount: number;
+  commentCount: number;
+}
+
+
+export const mockCommunityDetail: CommunityDetail = {
+  id: '1',
+  name: 'Invite Fshbfegs Community',
+  icon: '🎬',
+  bannerUrl: 'https://your-cdn.com/cinema-banner.jpg',
+  memberCount: 1,
+  postsToday: 0,
+  description: 'A community for cinema lovers.',
+  isJoined: false,
+  isPublic: true,
+};
+
+export const mockCommunityPosts: CommunityPost[] = [];

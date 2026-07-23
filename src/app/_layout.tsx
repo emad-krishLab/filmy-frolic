@@ -12,10 +12,7 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="auth" />
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen
-            name="create-community"
-            options={{ presentation: "modal", headerShown: false }}
-          />
+          <Stack.Screen name="community" />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>

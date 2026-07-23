@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDiscardConfirm } from "@/components/communities/useDiscardConfirm";
-import { useCreateCommunityStore } from "../store/useCreateCommunityStore";
+import { useCreateCommunityStore } from "../../store/useCreateCommunityStore";
 
 import { BannerUpload } from "@/components/communities/BannerUpload";
 import { FormField } from "@/components/communities/FormField";
