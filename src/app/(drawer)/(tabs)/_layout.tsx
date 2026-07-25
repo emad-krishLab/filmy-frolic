@@ -1,9 +1,9 @@
 import {
+  Archive02Icon,
   Home01Icon,
-  Message02Icon,
+  Search01Icon,
   User02Icon,
   UserGroup02Icon,
-  LiveStreaming02Icon
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react-native";
 import { withLayoutContext } from "expo-router";
@@ -18,14 +18,13 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TABS = [
-  { name: "home", label: "Home", icon: Home01Icon },
-  { name: "communities", label: "Communities", icon: UserGroup02Icon },
-  { name: "rooms", label: "Rooms", icon: LiveStreaming02Icon },
-  { name: "messages", label: "Messages", icon: Message02Icon },
+  { name: "feed", label: "Feed", icon: Home01Icon },
+  { name: "social", label: "Social", icon: UserGroup02Icon },
+  { name: "explore", label: "Explore", icon: Search01Icon },
+  { name: "archive", label: "Archive", icon: Archive02Icon },
   { name: "profile", label: "Profile", icon: User02Icon },
 ] as const;
 
-// ─── Custom tab bar ──────────────────────────────────────────────────────────
 function CustomTabBar({ state, navigation }: any) {
   const insets = useSafeAreaInsets();
   const [layouts, setLayouts] = useState<
@@ -66,9 +65,9 @@ function CustomTabBar({ state, navigation }: any) {
       pillX.value = target;
       hasMounted.current = true;
     } else {
-      pillX.value = withSpring(target, { stiffness: 180 });
+      pillX.value = withSpring(target, { stiffness: 250 });
     }
-    pillWidth.value = withSpring(44, { stiffness: 180 });
+    pillWidth.value = withSpring(44, { stiffness: 250 });
   }, [state.index, layouts]);
 
   return (
@@ -83,11 +82,10 @@ function CustomTabBar({ state, navigation }: any) {
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "center", 
           paddingTop: 8,
+          justifyContent: "space-between",
         }}
       >
-        
         <Animated.View
           style={[
             {
@@ -124,7 +122,7 @@ function CustomTabBar({ state, navigation }: any) {
               onLayout={handleLayout(index)}
               style={{
                 alignItems: "center",
-                paddingHorizontal: 18,
+                paddingHorizontal: 20,
                 paddingBottom: 8,
               }}
               accessibilityRole="tab"
@@ -165,23 +163,21 @@ function CustomTabBar({ state, navigation }: any) {
   );
 }
 
-// ─── Material top tabs, repositioned to the bottom ──────────────────────────
 const { Navigator } = createMaterialTopTabNavigator();
 
 const Tabs: any = withLayoutContext(Navigator);
 
-// ─── Tabs Layout ─────────────────────────────────────────────────────────────
 export default function TabsLayout() {
   return (
     <Tabs
       tabBarPosition="bottom"
       tabBar={(props: any) => <CustomTabBar {...props} />}
-      screenOptions={{ swipeEnabled: true, lazy: true }}
+      screenOptions={{ swipeEnabled: false, lazy: true }}
     >
-      <Tabs.Screen name="home" />
-      <Tabs.Screen name="communities" />
-      <Tabs.Screen name="rooms" />
-      <Tabs.Screen name="messages" />
+      <Tabs.Screen name="feed" />
+      <Tabs.Screen name="social" />
+      <Tabs.Screen name="explore" />
+      <Tabs.Screen name="archive" />
       <Tabs.Screen name="profile" />
     </Tabs>
   );

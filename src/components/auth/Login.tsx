@@ -49,7 +49,7 @@ export default function LoginScreen() {
       // const data = await res.json();
       // store token in AsyncStorage...
       await new Promise((resolve) => setTimeout(resolve, 900));
-      router.replace("/(tabs)/home");
+      router.replace("/(tabs)/feed");
     } catch (err) {
       setErrors({ password: "That email and password didn't match" });
     } finally {

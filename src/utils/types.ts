@@ -90,21 +90,41 @@ export const liveRooms: LiveRoom[] = [
   { id: "r2", name: "BIBEK", viewerCount: 1 },
 ];
 
-
 export const COMMUNITY_ICONS = [
-  '🎬', '🎭', '🚀', '👻', '⛩️', '🐍', '🎵', '🎨', '💉',
-  '💕', '😂', '🧠', '🏆', '📹', '⚡',
+  "🎬",
+  "🎭",
+  "🚀",
+  "👻",
+  "⛩️",
+  "🐍",
+  "🎵",
+  "🎨",
+  "💉",
+  "💕",
+  "😂",
+  "🧠",
+  "🏆",
+  "📹",
+  "⚡",
 ];
 
 export const GENRES = [
-  'Anime', 'Sci-Fi', 'Horror', 'Fantasy', 'Drama', 'Comedy',
-  'Action', 'Thriller', 'Romance', 'Documentary',
+  "Anime",
+  "Sci-Fi",
+  "Horror",
+  "Fantasy",
+  "Drama",
+  "Comedy",
+  "Action",
+  "Thriller",
+  "Romance",
+  "Documentary",
 ];
 
 export const MAX_GENRES = 3;
 
-
-export type CommunityTab = 'Feed' | 'About' | 'Members' | 'Events' | 'Media' | 'Rules';
+export type CommunityTab =
+  "Feed" | "About" | "Members" | "Events" | "Media" | "Rules";
 
 export interface CommunityDetail {
   id: string;
@@ -128,17 +148,61 @@ export interface CommunityPost {
   commentCount: number;
 }
 
-
 export const mockCommunityDetail: CommunityDetail = {
-  id: '1',
-  name: 'Invite Fshbfegs Community',
-  icon: '🎬',
-  bannerUrl: 'https://your-cdn.com/cinema-banner.jpg',
+  id: "1",
+  name: "Invite Fshbfegs Community",
+  icon: "🎬",
+  bannerUrl: "https://your-cdn.com/cinema-banner.jpg",
   memberCount: 1,
   postsToday: 0,
-  description: 'A community for cinema lovers.',
+  description: "A community for cinema lovers.",
   isJoined: false,
   isPublic: true,
 };
 
 export const mockCommunityPosts: CommunityPost[] = [];
+
+export type ReactionType = "wow" | "fire" | "heart" | "thumbsUp";
+
+export interface FeedPost {
+  id: string;
+
+  authorName: string;
+  authorAvatarUrl?: string;
+
+  createdAt: string;
+
+  content: string;
+
+  // Future ready
+  movieTitle?: string;
+  moviePosterUrl?: string;
+
+  reactions: {
+    wow: number;
+    fire: number;
+    heart: number;
+    thumbsUp: number;
+  };
+
+  viewerReaction?: ReactionType;
+
+  commentCount: number;
+
+  isSaved: boolean;
+  isFollowing: boolean;
+}
+
+export interface TrendingItem {
+  id: string;
+  label: string;
+  authorAvatarUrl?: string;
+  heatCount: number;
+}
+
+export interface Comment {
+  id: string;
+  authorName: string;
+  content: string;
+  timestamp: string;
+}
