@@ -1,9 +1,11 @@
 import { PlusSignIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react-native";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 
 export const FeedHeader = () => {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   
   return (
@@ -25,7 +27,7 @@ export const FeedHeader = () => {
 
         {/* Add Post Button */}
         <TouchableOpacity
-          onPress={() => console.log("Navigate to create post")}
+          onPress={() => router.push("/create-post")}
           className="bg-primary w-11 h-11 rounded-full items-center justify-center active:opacity-70"
           accessibilityLabel="Create new post"
         >

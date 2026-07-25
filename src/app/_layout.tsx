@@ -12,6 +12,11 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="auth" />
           <Stack.Screen name="community" />
+
+          <Stack.Screen
+            name="create-post"
+            options={{ presentation: "modal", headerShown: false }}
+          />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>

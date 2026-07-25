@@ -4,7 +4,7 @@ import { DrawerActions } from "@react-navigation/native";
 import { HugeiconsIcon } from "@hugeicons/react-native";
 
 import {
-  Menu09Icon,
+  Menu02Icon,
   Notification01Icon,
   Settings02Icon,
 } from "@hugeicons/core-free-icons";
@@ -50,7 +50,7 @@ export default function TopBar({
             android_ripple={{ color: "#262635", borderless: true }}
             className="h-11 w-11 items-center justify-center rounded-full active:opacity-70"
           >
-            <HugeiconsIcon icon={Menu09Icon} size={24} color="#F0F0F8" />
+            <HugeiconsIcon icon={Menu02Icon} size={24} color="#F0F0F8" />
           </Pressable>
 
           {showLogo && (

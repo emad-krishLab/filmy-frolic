@@ -206,3 +206,15 @@ export interface Comment {
   content: string;
   timestamp: string;
 }
+
+export interface CreatePostForm {
+  content: string;
+  communityTag: string | null; // optional: which community this post appears in
+}
+
+export const INITIAL_POST_FORM: CreatePostForm = {
+  content: "",
+  communityTag: null,
+};
+
+export const MAX_POST_LENGTH = 500;
