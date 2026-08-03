@@ -1,4 +1,4 @@
-import { Comment, FeedPost } from "./types";
+import { Comment, FeedPost, Room, SearchResult } from "./types";
 
 export const trendingItems = [
   {
@@ -134,3 +134,47 @@ export const mockComments: Record<string, Comment[]> = {
     { id: 'c5', authorName: 'a24_fan', content: 'The hot dog fingers scene was absolutely wild! 😂', timestamp: '2026-07-22T21:00:00Z' },
   ],
 };
+
+
+
+export const ALL_RESULTS: SearchResult[] = [
+  { id: "m1", type: "movie", title: "Dune: Part Two", subtitle: "Sci-Fi · 2024", metaLabel: "8.5" },
+  { id: "m2", type: "movie", title: "Oppenheimer", subtitle: "Drama · 2023", metaLabel: "8.9" },
+  { id: "c1", type: "community", title: "Sci-Fi Fanatics", subtitle: "General", metaLabel: "1.2k members" },
+  { id: "c2", type: "community", title: "hera bete", subtitle: "Sci-Fi", metaLabel: "1 member" },
+  { id: "r1", type: "room", title: "Oppenheimer Watch Party", subtitle: "Hosted by bibek jana", metaLabel: "Live" },
+  { id: "g1", type: "gossip", title: "Are Hollywood's Favourites Recasting?", subtitle: "@deepguchhait001", metaLabel: "50%" },
+  { id: "a1", type: "article", title: "The Rise of A24 Studios", subtitle: "Industry", metaLabel: "5 min read" },
+  { id: "gm1", type: "game", title: "Guess the Movie", subtitle: "Trivia", metaLabel: "New" },
+  { id: "p1", type: "person", title: "gajula_jagadis", subtitle: "@gajula_jagadis", metaLabel: "340 followers" },
+];
+
+
+
+export const rooms: Room[] = [
+  {
+    id: "1",
+    name: "DDD",
+    description: "ddd",
+    thumbnailUrl: "https://your-cdn.com/cinema-banner.jpg",
+    isLive: true,
+    viewerCount: 1,
+    hostName: "bibek Jana",
+    category: "video-room",
+    isFollowingHost: false,
+    isHostedByMe: false,
+  },
+  {
+    id: "2",
+    name: "Oppenheimer Watch Party",
+    thumbnailUrl: "https://your-cdn.com/cinema-banner.jpg",
+    isLive: true,
+    viewerCount: 24,
+    hostName: "emad",
+    category: "watch-party",
+    isFollowingHost: true,
+    isHostedByMe: true,
+  },
+];
+
+export const roomStats = { activeRooms: 24, watchParties: 8 };

@@ -9,9 +9,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        /* ===========================
-         * Brand
-         * =========================== */
         primary: {
           DEFAULT: "#F5C518",
           light: "#EAB308",
@@ -19,17 +16,11 @@ module.exports = {
           foreground: "#080810",
         },
 
-        /* ===========================
-         * Background
-         * =========================== */
         background: {
           DEFAULT: "#080810",
           secondary: "#0D0D18",
         },
 
-        /* ===========================
-         * Surface / Cards
-         * =========================== */
         surface: {
           DEFAULT: "#12121E",
           light: "#1A1A26",
@@ -38,9 +29,6 @@ module.exports = {
           hover: "#262635",
         },
 
-        /* ===========================
-         * Text
-         * =========================== */
         text: {
           primary: "#F0F0F8",
           secondary: "#8A8A9E",
@@ -49,17 +37,11 @@ module.exports = {
           tertiary: "#5C5C6E",
         },
 
-        /* ===========================
-         * Borders
-         * =========================== */
         border: {
           DEFAULT: "#333344",
           light: "#262635",
         },
 
-        /* ===========================
-         * Status
-         * =========================== */
         success: {
           DEFAULT: "#2ECC71",
           light: "#22C55E",
@@ -105,7 +87,7 @@ module.exports = {
         md: "12px",
         lg: "16px",
         xl: "20px",
-        "2xl": "24px",
+        
         full: "9999px",
       },
 

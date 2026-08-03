@@ -1,3 +1,6 @@
+import { ALL_RESULTS } from "./data";
+import { SearchResult } from "./types";
+
 export function getRelativeTime(date: string) {
   const now = new Date().getTime();
   const then = new Date(date).getTime();
@@ -20,3 +23,15 @@ export function getRelativeTime(date: string) {
 
   return `${Math.floor(diff / 31536000)}y`;
 }
+
+export async function searchAll(query: string): Promise<SearchResult[]> {
+  await new Promise((resolve) => setTimeout(resolve, 250)); // simulate network latency
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return ALL_RESULTS.filter(
+    (r) =>
+      r.title.toLowerCase().includes(q) ||
+      r.subtitle?.toLowerCase().includes(q)
+  );
+}
+

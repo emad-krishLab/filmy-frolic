@@ -22,7 +22,7 @@ export function FilterTabs({ active, onChange }: Props) {
           <Pressable
             key={filter}
             onPress={() => onChange(filter)}
-            className={`px-4 py-2 rounded-full border ${
+            className={`px-4 py-1.5 rounded-full border ${
               isActive
                 ? 'bg-info/15 border-info'
                 : 'bg-surface border-border-light'

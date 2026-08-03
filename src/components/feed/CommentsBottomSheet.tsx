@@ -1,27 +1,16 @@
-// src/components/feed/CommentsBottomSheet.tsx
+
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetFooter,
+  BottomSheetFooterProps,
+  BottomSheetTextInput,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { Cancel01Icon, Sent02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react-native";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  FlatList,
-  Keyboard,
-  Platform,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Comment {
@@ -48,34 +37,13 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const inputRef = useRef<TextInput>(null);
   const [commentText, setCommentText] = useState("");
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-  // Snap points: 50% and 85% of screen height
   const snapPoints = useMemo(() => ["50%", "85%"], []);
 
-  // Handle keyboard events
-  useEffect(() => {
-    const keyboardShow = Keyboard.addListener("keyboardDidShow", (e) => {
-      setKeyboardHeight(e.endCoordinates.height);
-    });
-    const keyboardHide = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardHeight(0);
-    });
-
-    return () => {
-      keyboardShow.remove();
-      keyboardHide.remove();
-    };
-  }, []);
-
-  // Control bottom sheet visibility
   useEffect(() => {
     if (isVisible) {
       bottomSheetRef.current?.expand();
-      // Auto-focus input after sheet opens
-      setTimeout(() => inputRef.current?.focus(), 500);
     } else {
       bottomSheetRef.current?.close();
       setCommentText("");
@@ -85,9 +53,7 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
   const getRelativeTime = (isoDate: string) => {
     const now = new Date();
     const then = new Date(isoDate);
-    const diffMinutes = Math.floor(
-      (now.getTime() - then.getTime()) / (1000 * 60),
-    );
+    const diffMinutes = Math.floor((now.getTime() - then.getTime()) / (1000 * 60));
 
     if (diffMinutes < 1) return "Just now";
     if (diffMinutes < 60) return `${diffMinutes}m ago`;
@@ -99,8 +65,6 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
     if (commentText.trim()) {
       onAddComment(postId, commentText.trim());
       setCommentText("");
-      // Keep keyboard open for multiple comments
-      inputRef.current?.focus();
     }
   };
 
@@ -109,7 +73,6 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
     onClose();
   }, [onClose]);
 
-  // Custom backdrop
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
       <BottomSheetBackdrop
@@ -120,7 +83,7 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
         pressBehavior="close"
       />
     ),
-    [],
+    []
   );
 
   const renderComment = ({ item }: { item: Comment }) => (
@@ -132,105 +95,34 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
       </View>
       <View className="flex-1">
         <View className="flex-row items-center justify-between">
-          <Text className="text-text-primary font-semibold text-sm">
-            {item.authorName}
-          </Text>
-          <Text className="text-text-muted text-xs">
-            {getRelativeTime(item.timestamp)}
-          </Text>
+          <Text className="text-text-primary font-semibold text-sm">{item.authorName}</Text>
+          <Text className="text-text-muted text-xs">{getRelativeTime(item.timestamp)}</Text>
         </View>
-        <Text className="text-text-secondary text-sm mt-0.5 leading-5">
-          {item.content}
-        </Text>
+        <Text className="text-text-secondary text-sm mt-0.5 leading-5">{item.content}</Text>
       </View>
     </View>
   );
 
-  // Handle sheet changes
   const handleSheetChange = useCallback(
     (index: number) => {
-      if (index === -1) {
-        onClose();
-      }
+      if (index === -1) onClose();
     },
-    [onClose],
+    [onClose]
   );
 
-  // Calculate bottom padding for input when keyboard is visible
-  const getInputBottomPadding = () => {
-    if (Platform.OS === "ios") {
-      return keyboardHeight > 0 ? keyboardHeight - insets.bottom : 0;
-    }
-    return keyboardHeight > 0 ? keyboardHeight : 0;
-  };
-
-  return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      index={isVisible ? 0 : -1}
-      snapPoints={snapPoints}
-      onChange={handleSheetChange}
-      backdropComponent={renderBackdrop}
-      enablePanDownToClose
-      enableHandlePanningGesture
-      enableContentPanningGesture
-      handleIndicatorStyle={{
-        backgroundColor: "#333344",
-        width: 40,
-        height: 4,
-      }}
-      backgroundStyle={{
-        backgroundColor: "#12121E",
-      }}
-      keyboardBehavior="interactive"
-      keyboardBlurBehavior="restore"
-      android_keyboardInputMode="adjustResize"
-      style={{ zIndex: 9999 }} // Ensure it's above everything
-    >
-      <BottomSheetView className="flex-1 bg-surface-card">
-        {/* Header */}
-        <View className="flex-row items-center justify-between px-4 py-3 border-b border-border-light">
-          <Text className="text-text-primary text-lg font-semibold">
-            Comments ({comments.length})
-          </Text>
-          <TouchableOpacity
-            onPress={handleClose}
-            className="w-8 h-8 items-center justify-center"
-          >
-            <HugeiconsIcon icon={Cancel01Icon} size={20} color="#8A8A9E" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Comments List */}
-        <FlatList
-          data={comments}
-          keyExtractor={(item) => item.id}
-          renderItem={renderComment}
-          contentContainerStyle={{
-            paddingBottom: 120, // Space for input at bottom
-          }}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
-            <View className="items-center justify-center py-12">
-              <Text className="text-text-muted text-sm">
-                No comments yet. Be the first!
-              </Text>
-            </View>
-          }
-        />
-
-        {/* Comment Input - Fixed at bottom with keyboard handling */}
+  // The footer is now the single source of truth for keyboard-safe positioning —
+  // BottomSheetFooter handles this internally via the sheet's own animated values,
+  // so no manual Keyboard listeners or offset math is needed here.
+  const renderFooter = useCallback(
+    (props: BottomSheetFooterProps) => (
+      <BottomSheetFooter {...props} bottomInset={insets.bottom}>
         <View
-          className="absolute left-0 right-0 bg-surface-card border-t border-border-light px-4 py-3"
-          style={{
-            bottom: getInputBottomPadding(),
-            paddingBottom: Platform.OS === "ios" ? 8 : 8,
-          }}
+          className="bg-surface-card border-t border-border-light px-4 pt-3"
+          style={{ paddingBottom: 12 }}
         >
           <View className="flex-row items-center gap-2">
             <View className="flex-1 flex-row items-center bg-surface-light rounded-lg px-3 border border-border-light">
-              <TextInput
-                ref={inputRef}
+              <BottomSheetTextInput
                 className="flex-1 text-text-primary text-sm py-2 max-h-24"
                 placeholder="Write a comment..."
                 placeholderTextColor="#8A8A9E"
@@ -243,9 +135,7 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
                 blurOnSubmit={false}
               />
               {commentText.length > 0 && (
-                <Text className="text-text-muted text-xs mr-2">
-                  {commentText.length}/500
-                </Text>
+                <Text className="text-text-muted text-xs mr-2">{commentText.length}/500</Text>
               )}
             </View>
 
@@ -264,6 +154,50 @@ export const CommentsBottomSheet: React.FC<CommentsBottomSheetProps> = ({
             </TouchableOpacity>
           </View>
         </View>
+      </BottomSheetFooter>
+    ),
+    [commentText, insets.bottom]
+  );
+
+  return (
+    <BottomSheet
+      ref={bottomSheetRef}
+      index={isVisible ? 0 : -1}
+      snapPoints={snapPoints}
+      onChange={handleSheetChange}
+      backdropComponent={renderBackdrop}
+      footerComponent={renderFooter}
+      enablePanDownToClose
+      enableHandlePanningGesture
+      enableContentPanningGesture
+      handleIndicatorStyle={{ backgroundColor: "#333344", width: 40, height: 4 }}
+      backgroundStyle={{ backgroundColor: "#1A1A2E" }}
+      keyboardBehavior="interactive"
+      keyboardBlurBehavior="restore"
+      android_keyboardInputMode="adjustResize"
+    >
+      <BottomSheetView className="flex-1 bg-surface-card">
+        <View className="flex-row items-center justify-between px-4 py-3 border-b border-border-light">
+          <Text className="text-text-primary text-lg font-semibold">
+            Comments ({comments.length})
+          </Text>
+          <TouchableOpacity onPress={handleClose} className="w-8 h-8 items-center justify-center">
+            <HugeiconsIcon icon={Cancel01Icon} size={20} color="#8A8A9E" />
+          </TouchableOpacity>
+        </View>
+
+        <FlatList
+          data={comments}
+          keyExtractor={(item) => item.id}
+          renderItem={renderComment}
+          contentContainerStyle={{ paddingBottom: 96 }} // clears the footer's height
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View className="items-center justify-center py-12">
+              <Text className="text-text-muted text-sm">No comments yet. Be the first!</Text>
+            </View>
+          }
+        />
       </BottomSheetView>
     </BottomSheet>
   );

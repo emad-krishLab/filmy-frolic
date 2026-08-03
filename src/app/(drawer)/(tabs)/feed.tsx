@@ -1,17 +1,15 @@
 // src/app/(tabs)/feed.tsx
+import { FloatingActionButton } from "@/components/common/FloatingActionButton";
 import TopBar from "@/components/common/TopBar";
 import { CommentsBottomSheet } from "@/components/feed/CommentsBottomSheet";
-import { FeedHeader } from "@/components/feed/FeedHeader";
 import { PostCard } from "@/components/feed/PostCard";
 import { mockComments, mockPosts } from "@/utils/data";
 import { Comment, TrendingItem } from "@/utils/types";
+import { router, useNavigation } from "expo-router";
 import { DrawerActions } from "expo-router/react-navigation";
-import { useNavigation } from "expo-router";
 import { useCallback, useState } from "react";
 import { FlatList, RefreshControl, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-// Mock data
 
 const mockTrending: TrendingItem[] = [
   { id: "t1", label: "Oppenheimer", heatCount: 142 },
@@ -37,10 +35,8 @@ export default function FeedScreen() {
 
   const savedCount = posts.filter((p) => p.isSaved).length;
 
-  // Handlers
   const handleComposePress = () => {
-    console.log("Open compose screen");
-    // router.push('/compose'); // Uncomment when compose screen exists
+    router.push("/create-post");
   };
 
   const handleTrendingItemPress = (item: TrendingItem) => {
@@ -53,7 +49,6 @@ export default function FeedScreen() {
   };
 
   const handleAddComment = (postId: string, commentText: string) => {
-    // Create new comment object
     const newComment: Comment = {
       id: `c${Date.now()}`,
       authorName: "Current User",
@@ -61,13 +56,11 @@ export default function FeedScreen() {
       timestamp: new Date().toISOString(),
     };
 
-    // Add to comments state
     setComments((prev) => ({
       ...prev,
       [postId]: [...(prev[postId] || []), newComment],
     }));
 
-    // Increment comment count on the post
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post.id === postId
@@ -94,7 +87,6 @@ export default function FeedScreen() {
   };
 
   const handleReportPress = (postId: string) => {
-    // In production, show a confirmation dialog
     console.log("Report post:", postId);
   };
 
@@ -102,10 +94,8 @@ export default function FeedScreen() {
     setIsRefreshing(true);
     setIsError(false);
 
-    // Simulate API call
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      // In production, fetch new posts here
       setPosts(mockPosts);
     } catch (error) {
       setIsError(true);
@@ -116,7 +106,6 @@ export default function FeedScreen() {
 
   const handleFollowToggle = () => {};
 
-  // Render empty state
   const renderEmptyState = () => {
     if (isError) {
       return (
@@ -151,12 +140,10 @@ export default function FeedScreen() {
         notificationCount={3}
         onDrawerPress={openDrawer}
         onNotificationsPress={() => {
-          console.log("Navigate to notifications");
-          // router.push('/notifications');
+          router.push("/notification");
         }}
         onSettingsPress={() => {
-          console.log("Navigate to settings");
-          // router.push('/settings');
+          router.push("/settings");
         }}
       />
 
@@ -173,7 +160,6 @@ export default function FeedScreen() {
             onFollowToggle={handleFollowToggle}
           />
         )}
-        ListHeaderComponent={FeedHeader}
         ListEmptyComponent={renderEmptyState}
         refreshControl={
           <RefreshControl
@@ -184,17 +170,17 @@ export default function FeedScreen() {
           />
         }
         contentContainerStyle={{
-          paddingBottom: insets.bottom + 20,
+          paddingBottom: insets.bottom + 90,
           flexGrow: 1,
         }}
         showsVerticalScrollIndicator={false}
-        // Performance optimization
         maxToRenderPerBatch={5}
         windowSize={10}
         initialNumToRender={3}
       />
 
-      {/* Comments Bottom Sheet */}
+      <FloatingActionButton onPress={handleComposePress} />
+
       <CommentsBottomSheet
         isVisible={isCommentsVisible}
         onClose={handleCommentsClose}

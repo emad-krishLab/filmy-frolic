@@ -172,7 +172,7 @@ export default function TabsLayout() {
     <Tabs
       tabBarPosition="bottom"
       tabBar={(props: any) => <CustomTabBar {...props} />}
-      screenOptions={{ swipeEnabled: false, lazy: true }}
+      screenOptions={{ swipeEnabled: false, lazy: true , headerShown: false}}
     >
       <Tabs.Screen name="feed" />
       <Tabs.Screen name="social" />

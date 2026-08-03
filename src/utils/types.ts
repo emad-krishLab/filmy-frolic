@@ -218,3 +218,60 @@ export const INITIAL_POST_FORM: CreatePostForm = {
 };
 
 export const MAX_POST_LENGTH = 500;
+
+
+// src/types/search.ts
+export type SearchCategory =
+  | "movie" | "community" | "room" | "gossip" | "article" | "game" | "person";
+
+export interface SearchResult {
+  id: string;
+  type: SearchCategory;
+  title: string;
+  subtitle?: string;
+  imageUrl?: string;
+  metaLabel?: string; // e.g. "4.2k members", "8.5 IMDb", "Live now"
+}
+
+export interface CategoryConfig {
+  type: SearchCategory;
+  label: string;
+  pluralLabel: string;
+}
+
+export const CATEGORIES: CategoryConfig[] = [
+  { type: "movie", label: "Movie", pluralLabel: "Movies" },
+  { type: "community", label: "Community", pluralLabel: "Communities" },
+  { type: "room", label: "Room", pluralLabel: "Rooms" },
+  { type: "gossip", label: "Gossip", pluralLabel: "Gossips" },
+  { type: "article", label: "Article", pluralLabel: "Articles" },
+  { type: "game", label: "Game", pluralLabel: "Games" },
+  { type: "person", label: "Person", pluralLabel: "People" },
+];
+
+export const TRENDING_SEARCHES = ["Oppenheimer", "A24", "Sci-Fi communities", "Watch parties"];
+
+
+
+export type RoomCategory = "watch-party" | "voice-room" | "discussion" | "video-room";
+
+export interface Room {
+  id: string;
+  name: string;
+  description?: string;
+  thumbnailUrl: string;
+  isLive: boolean;
+  viewerCount: number;
+  hostName: string;
+  hostAvatarUrl?: string;
+  category: RoomCategory;
+  isFollowingHost: boolean;
+  isHostedByMe: boolean;
+}
+
+export const ROOM_CATEGORY_LABELS: Record<RoomCategory, string> = {
+  "watch-party": "Watch Party",
+  "voice-room": "Voice Room",
+  discussion: "Discussion",
+  "video-room": "Video Room",
+};

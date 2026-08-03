@@ -1,55 +1,43 @@
-// src/components/communities/SuggestedStrip.tsx
-import { View, Text, ScrollView, Pressable } from 'react-native';
-import { SuggestedCommunity } from '@/utils/types';
+import { SuggestedCommunity } from "@/utils/types";
+import { FlatList, Text, useWindowDimensions, View } from "react-native";
+import { SuggestedCard } from "./SuggestedCard";
 
 interface Props {
   data: SuggestedCommunity[];
   onJoin?: (id: string) => void;
 }
 
+const SCREEN_PADDING = 16;
+const CARD_GAP = 10;
+
 export function SuggestedStrip({ data, onJoin }: Props) {
+  const { width: screenWidth } = useWindowDimensions();
+
+  // Exactly 3 cards fully visible at once, sized to fill the row —
+  // scrolling reveals the rest, per the "3 at a time, scrollable" request.
+  const cardWidth = (screenWidth - SCREEN_PADDING * 2 - CARD_GAP * 2) / 3;
+
   if (!data.length) return null;
 
   return (
-    <View className="mb-5">
+    <View className="mb-6">
       <Text className="text-text-primary font-semibold text-base mb-3">
         Suggested for you
       </Text>
-      <ScrollView
+      <FlatList
+        data={data}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 10 }}
-      >
-        {data.map((item) => (
-          <View
-            key={item.id}
-            className="bg-surface-card border border-border-light rounded-md p-3 items-center w-28"
-          >
-            <View className="w-11 h-11 rounded-sm bg-accent-magenta items-center justify-center mb-2">
-              <Text className="text-white font-bold">
-                {item.name.charAt(0).toUpperCase()}
-              </Text>
-            </View>
-            <Text
-              numberOfLines={1}
-              className="text-text-primary text-xs font-medium mb-0.5"
-            >
-              {item.name}
-            </Text>
-            <Text className="text-text-muted text-[10px] mb-2">
-              {item.memberCount} members
-            </Text>
-            <Pressable
-              onPress={() => onJoin?.(item.id)}
-              className="bg-info px-3 py-1 rounded-sm w-full"
-            >
-              <Text className="text-white text-[11px] font-semibold text-center">
-                Join
-              </Text>
-            </Pressable>
-          </View>
-        ))}
-      </ScrollView>
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ gap: CARD_GAP }}
+        renderItem={({ item }) => (
+          <SuggestedCard
+            community={item}
+            width={cardWidth}
+            onJoin={() => onJoin?.(item.id)}
+          />
+        )}
+      />
     </View>
   );
 }
